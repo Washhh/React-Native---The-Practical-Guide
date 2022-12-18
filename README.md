@@ -1,2 +1,2 @@
-# React-Native-The-Practical-Guide
-Repositório no qual vou colocar todo conteúdo prático realizado durante o curso **React Native - The Practical Guide [2023]** lecionado pelo professor **_Maximilian Schwarzmüller_**
+# React-Native-The-Practical-Guide - Section 1
+Repositório no qual se encontram os códigos utilizados na Sessão 1 do curso. Por ser uma parte mais introdutória, houve apenas a configuração base do projeto.
