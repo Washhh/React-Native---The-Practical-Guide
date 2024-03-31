@@ -1,2 +1,2 @@
-# React-Native-The-Practical-Guide - Section 3
-Repositório no qual se encontram os códigos utilizados na Sessão 3 do curso. Nessa sessão é abordado as formas de realizar o debugging de um código em React native.
+# React-Native-The-Practical-Guide - Section 4
+Repositório no qual se encontram os códigos utilizados na Sessão 4 do curso. Nessa sessão, foi construido um pequeno jogo utilizando os conceitos base do React e funcionalidades do React Native. Para criação, tentei quase sempre fazer antes de ver, o que gerou diferenças no layout final e lógica das funções, porém o resultado final e o apresentando no curso, chegaram ao objetivo final. Por fim, utilizei Typescript para deixar o projeto mais legível em suas propriedades.
