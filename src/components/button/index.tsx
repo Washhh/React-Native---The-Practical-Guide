@@ -1,12 +1,14 @@
 import {
   View,
   Text,
-  TouchableWithoutFeedback,
   StyleProp,
   ViewStyle,
   TextStyle,
   StyleSheet,
-} from "react-native";
+  Pressable,
+  Platform,
+} from 'react-native';
+import Colors from '../../utils/colors';
 
 interface ButtonProps {
   text: string;
@@ -21,25 +23,44 @@ export const Button = ({
   buttonStyle,
   textStyle,
 }: ButtonProps) => {
-  const buttonMergedStyle = StyleSheet.compose(styles.button, buttonStyle);
-  const textMergedStyle = StyleSheet.compose(styles.text, textStyle);
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View style={buttonMergedStyle}>
-        <Text style={textMergedStyle}>{text}</Text>
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={[styles.buttonOutContainer, buttonStyle]}>
+      <Pressable
+        style={({ pressed }) =>
+          pressed && Platform.OS === 'ios'
+            ? [styles.pressedIOS, styles.buttonInnerContainer]
+            : [styles.buttonInnerContainer]
+        }
+        onPress={onPress}
+        android_ripple={{ color: Colors.primary600 }}
+      >
+        <Text style={[styles.buttonText, textStyle]}>{text}</Text>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    padding: 16,
-    borderColor: "#000",
-    borderWidth: 1,
+  buttonOutContainer: {
+    flex: 1,
+    marginHorizontal: 4,
+    marginVertical: 8,
+    borderRadius: 28,
+    overflow: 'hidden',
   },
-  text: {
-    color: "#000",
-    fontSize: 16,
+  buttonInnerContainer: {
+    backgroundColor: Colors.primary500,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    elevation: 2,
+
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'open-sans'
+  },
+  pressedIOS: {
+    opacity: 0.75,
   },
 });

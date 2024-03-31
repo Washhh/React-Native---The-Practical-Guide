@@ -1,18 +1,104 @@
-import { Text, View } from "react-native";
-import { Button } from "../../components/button";
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button } from '../../components/Button';
+import { useState } from 'react';
+import Colors from '../../utils/colors';
+import { Title } from '../../components/Title';
 
-export const StartGame = () => {
+interface StartGameProps {
+  setUserNumber: (userNumber: number) => void;
+}
+
+export const StartGame = ({ setUserNumber }: StartGameProps) => {
+  const [enteredNumber, setEnteredNumber] = useState('');
+
+  const numberInputHandle = (enteredText: string) => {
+    setEnteredNumber(enteredText);
+  };
+  const resetInputHandler = () => {
+    setEnteredNumber('');
+  };
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredNumber);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 999) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 999.',
+        [
+          {
+            text: 'Okay',
+            style: 'destructive',
+            onPress: resetInputHandler,
+          },
+        ]
+      );
+      return;
+    }
+    setUserNumber(chosenNumber);
+  };
   return (
-    <View>
-      <Text>Start Game</Text>
-      <Button
-        text="Botão"
-        onPress={() => console.log("Cliquei em")}
-        buttonStyle={{
-          backgroundColor: "#92fa21",
-        }}
-      />
-      <Button text="Botão2" onPress={() => console.log("Cliquei em")} />
+    <View style={styles.container}>
+      <Title text='Section 4 - Guess My Number' textStyle={{marginHorizontal: 16}}/>
+      <View style={styles.content}>
+        <Text style={styles.inputTitle}>Enter a number</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            maxLength={3}
+            keyboardType='numeric'
+            style={styles.input}
+            value={enteredNumber}
+            onChangeText={numberInputHandle}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Button text='Reset' onPress={resetInputHandler} />
+          <Button text='Confirm' onPress={confirmInputHandler} />
+        </View>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 100,
+  },
+  content: {
+    backgroundColor: Colors.primary700,
+    marginTop: 72,
+    marginHorizontal: 24,
+    padding: 16,
+    borderRadius: 8,
+    elevation: 4,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.25,
+  },
+  inputTitle: {
+    fontSize: 32,
+    color: Colors.secondary500,
+    textAlign: 'center',
+    fontFamily: 'open-sans'
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  input: {
+    height: 50,
+    width: 60,
+    fontSize: 32,
+    borderBottomColor: Colors.secondary500,
+    color: Colors.secondary500,
+    borderBottomWidth: 2,
+    textAlign: 'center',
+    fontFamily: 'open-sans'
+  },
+  buttonsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+});
