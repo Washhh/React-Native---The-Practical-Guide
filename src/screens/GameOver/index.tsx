@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -18,15 +19,14 @@ interface GameOverProps {
 }
 
 export const GameOver = ({ userNumber, guesses, resetGame }: GameOverProps) => {
-  const { height, width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const content = useMemo(() => {
-    console.log(height);
     if (height < 400) {
       return (
-        <>
+        <ScrollView>
           <Title text="Game Over" />
           <View style={style.contentWide}>
-            <View style={style.imageContainer}>
+            <View style={[style.imageContainer, { marginTop: 12 }]}>
               <View style={[style.imageBorder, { width: 150, height: 150 }]}>
                 <Image
                   style={style.image}
@@ -34,57 +34,58 @@ export const GameOver = ({ userNumber, guesses, resetGame }: GameOverProps) => {
                 />
               </View>
             </View>
-            <View>
-              <View style={style.textContainer}>
-                <Text style={style.text}>
-                  The device got the number{" "}
-                  <Text
-                    style={{
-                      ...style.text,
-                      color: Colors.primary600,
-                      fontFamily: "open-sans-bold",
-                    }}
-                  >
-                    {userNumber}
-                  </Text>{" "}
-                  right after{" "}
-                  <Text
-                    style={{
-                      ...style.text,
-                      color: Colors.primary600,
-                      fontFamily: "open-sans-bold",
-                    }}
-                  >
-                    {guesses.length}
-                  </Text>{" "}
-                  tries
-                </Text>
-              </View>
-              <FlatList
-                horizontal
-                data={guesses}
-                keyExtractor={(guess, index) => `${guess}-${index}`}
-                renderItem={({ item }) => {
-                  return (
-                    <View style={style.guessLogsContainer}>
-                      <Text style={style.guessLogText}>{item}</Text>
-                    </View>
-                  );
-                }}
-                ItemSeparatorComponent={() => (
-                  <View style={style.guessLogSeparator}>
-                    <Text style={style.guessLogText}>-</Text>
-                  </View>
-                )}
-              />
+
+            <View style={style.textContainer}>
+              <Text style={style.text}>
+                The device got the number{" "}
+                <Text
+                  style={{
+                    ...style.text,
+                    color: Colors.primary600,
+                    fontFamily: "open-sans-bold",
+                  }}
+                >
+                  {userNumber}
+                </Text>{" "}
+                right after{" "}
+                <Text
+                  style={{
+                    ...style.text,
+                    color: Colors.primary600,
+                    fontFamily: "open-sans-bold",
+                  }}
+                >
+                  {guesses.length}
+                </Text>{" "}
+                tries
+              </Text>
             </View>
           </View>
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <View style={style.buttonContainer}>
+          <View style={{ alignItems: "center" }}>
+            <FlatList
+              horizontal
+              data={guesses}
+              keyExtractor={(guess, index) => `${guess}-${index}`}
+              renderItem={({ item }) => {
+                return (
+                  <View style={style.guessLogsContainer}>
+                    <Text style={style.guessLogText}>{item}</Text>
+                  </View>
+                );
+              }}
+              ItemSeparatorComponent={() => (
+                <View style={style.guessLogSeparator}>
+                  <Text style={style.guessLogText}>-</Text>
+                </View>
+              )}
+            />
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <View style={style.buttonContainerWide}>
               <Button text="Start New Game" onPress={resetGame} />
             </View>
           </View>
-        </>
+        </ScrollView>
       );
     }
     return (
@@ -147,7 +148,7 @@ export const GameOver = ({ userNumber, guesses, resetGame }: GameOverProps) => {
         </View>
       </>
     );
-  }, []);
+  }, [height]);
   return <View style={style.container}>{content}</View>;
 };
 
@@ -197,6 +198,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  buttonContainerWide: {
+    marginHorizontal: 24,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
   },
   guessLogsContainer: {
     padding: 16,
