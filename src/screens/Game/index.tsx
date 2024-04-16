@@ -1,6 +1,13 @@
-import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Title } from '../../components/Title';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { NumberContainer } from '../../components/NumberContainer';
 import { Button } from '../../components/Button';
 import Colors from '../../utils/colors';
@@ -29,6 +36,8 @@ const generateRandomNumber = (min: number, max: number) => {
 };
 
 export const Game = ({ userNumber, onGameOver }: GameProps) => {
+  const { width } = useWindowDimensions();
+
   const [minAndMax, setMinAndMax] = useState({
     min: 1,
     max: 1000,
@@ -86,22 +95,47 @@ export const Game = ({ userNumber, onGameOver }: GameProps) => {
     checkGameOver(newGuess);
   };
 
+  const content =
+    width < 500 ? (
+      <>
+        <NumberContainer number={currentGuess} />
+        <View style={style.buttonsContainer}>
+          <Button
+            text='+'
+            textStyle={{ fontSize: 24 }}
+            onPress={handleClickPlusButton}
+          />
+          <Button
+            text='-'
+            textStyle={{ fontSize: 24 }}
+            onPress={handleClickMinusButton}
+          />
+        </View>
+      </>
+    ) : (
+      <View style={style.contentWide}>
+        <View style={style.buttonsContainerWide}>
+          <Button
+            text='+'
+            textStyle={{ fontSize: 24 }}
+            onPress={handleClickPlusButton}
+          />
+        </View>
+        <NumberContainer number={currentGuess} />
+        <View style={style.buttonsContainerWide}>
+          <Button
+            text='-'
+            textStyle={{ fontSize: 24 }}
+            onPress={handleClickMinusButton}
+          />
+        </View>
+      </View>
+    );
+
   return (
     <View style={style.container}>
       <Title text="Opponent's Guess" />
-      <NumberContainer number={currentGuess} />
-      <View style={style.buttonsContainer}>
-        <Button
-          text='+'
-          textStyle={{ fontSize: 24 }}
-          onPress={handleClickPlusButton}
-        />
-        <Button
-          text='-'
-          textStyle={{ fontSize: 24 }}
-          onPress={handleClickMinusButton}
-        />
-      </View>
+      {content}
       <View>
         <FlatList
           horizontal
@@ -128,6 +162,15 @@ export const Game = ({ userNumber, onGameOver }: GameProps) => {
 const style = StyleSheet.create({
   container: {
     margin: 24,
+    alignItems: 'center',
+  },
+  contentWide: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonsContainerWide: {
+    flexDirection: 'row',
+    flex: 1,
   },
   buttonsContainer: {
     flexDirection: 'row',
