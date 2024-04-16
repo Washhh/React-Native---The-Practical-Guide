@@ -26,18 +26,18 @@ export const StartGame = ({ setUserNumber }: StartGameProps) => {
     setEnteredNumber(enteredText);
   };
   const resetInputHandler = () => {
-    setEnteredNumber('');
+    setEnteredNumber("");
   };
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredNumber);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 999) {
       Alert.alert(
-        'Invalid number!',
-        'Number has to be a number between 1 and 999.',
+        "Invalid number!",
+        "Number has to be a number between 1 and 999.",
         [
           {
-            text: 'Okay',
-            style: 'destructive',
+            text: "Okay",
+            style: "destructive",
             onPress: resetInputHandler,
           },
         ]
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     elevation: 4,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.25,
@@ -104,9 +104,9 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans',
   },
   inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
   },
   input: {
     height: 50,
@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans',
   },
   buttonsContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
