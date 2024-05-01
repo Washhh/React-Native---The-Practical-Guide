@@ -1,16 +1,18 @@
-import {
-  useNavigation,
-  NavigationProp,
-} from "@react-navigation/native";
-import { Pressable, View, Text, StyleSheet, Platform } from "react-native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { StackScreens } from "../../../../App";
 
 interface CategoryGridTileProps {
   title: string;
   color: string;
+  id: string;
 }
 
-export const CategoryGridTile = ({ title, color }: CategoryGridTileProps) => {
+export const CategoryGridTile = ({
+  title,
+  color,
+  id,
+}: CategoryGridTileProps) => {
   const navigation = useNavigation<NavigationProp<StackScreens>>();
   return (
     <View style={styles.container}>
@@ -19,7 +21,11 @@ export const CategoryGridTile = ({ title, color }: CategoryGridTileProps) => {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
-        onPress={() => navigation.navigate("Overview")}
+        onPress={() =>
+          navigation.navigate("MealsOverview", {
+            categoryId: id,
+          })
+        }
       >
         <View
           style={[

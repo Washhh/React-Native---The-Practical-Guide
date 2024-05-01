@@ -5,13 +5,19 @@ import { CategoryGridTile } from "./components/CategoryGridTile";
 import { StatusBar } from "expo-status-bar";
 
 const renderCategory = (category: Category) => {
-  return <CategoryGridTile title={category.title} color={category.color} />;
+  return (
+    <CategoryGridTile
+      id={category.id}
+      title={category.title}
+      color={category.color}
+    />
+  );
 };
 
 export const Categories = () => {
   return (
     <SafeAreaView>
-      <StatusBar style="light"/>
+      <StatusBar style="light" />
       <FlatList
         data={CATEGORIES}
         renderItem={({ item }) => renderCategory(item)}
