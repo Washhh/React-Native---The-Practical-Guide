@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { CardWithShadow } from "../../../../components/CardWithShadow";
+import { MealDetail } from "../../../../components/MealDetail";
 
 interface MealItemProps {
   title: string;
@@ -7,6 +8,7 @@ interface MealItemProps {
   duration: string;
   complexity: string;
   affordability: string;
+  onPress: () => void;
 }
 
 export const MealItem = ({
@@ -15,10 +17,12 @@ export const MealItem = ({
   affordability,
   complexity,
   duration,
+  onPress,
 }: MealItemProps) => {
   return (
     <CardWithShadow extraStyles={styles.mealItem}>
       <Pressable
+        onPress={onPress}
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
       >
         <View style={styles.innerContainer}>
@@ -26,11 +30,11 @@ export const MealItem = ({
             <Image source={{ uri: imageUrl }} style={styles.image} />
             <Text style={styles.title}>{title}</Text>
           </View>
-          <View style={styles.details}>
-            <Text style={styles.detailItem}>{duration}m</Text>
-            <Text style={styles.detailItem}>{complexity.toUpperCase()}</Text>
-            <Text style={styles.detailItem}>{affordability.toUpperCase()}</Text>
-          </View>
+          <MealDetail
+            affordability={affordability}
+            complexity={complexity}
+            duration={duration}
+          />
         </View>
       </Pressable>
     </CardWithShadow>
@@ -57,15 +61,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     margin: 8,
-  },
-  details: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
-  },
-  detailItem: {
-    marginHorizontal: 4,
-    fontSize: 12,
   },
 });

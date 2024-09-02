@@ -38,6 +38,9 @@ export const MealsOverview = () => {
         affordability={meal.affordability}
         duration={meal.duration}
         complexity={meal.complexity}
+        onPress={() => {
+          navigation.navigate("MealDetails", { meal });
+        }}
       />
     );
   };

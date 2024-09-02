@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { StackScreens } from "../../../../App";
+import { CardWithShadow } from "../../../../components/CardWithShadow";
 
 interface CategoryGridTileProps {
   title: string;
@@ -15,7 +16,7 @@ export const CategoryGridTile = ({
 }: CategoryGridTileProps) => {
   const navigation = useNavigation<NavigationProp<StackScreens>>();
   return (
-    <View style={styles.container}>
+    <CardWithShadow extraStyles={styles.container}>
       <Pressable
         style={({ pressed }) => [
           styles.button,
@@ -38,7 +39,7 @@ export const CategoryGridTile = ({
           <Text style={styles.title}>{title}</Text>
         </View>
       </Pressable>
-    </View>
+    </CardWithShadow>
   );
 };
 
@@ -47,17 +48,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 16,
     height: 150,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    overflow: Platform.select({
-      android: "hidden",
-      ios: "visible",
-    }),
   },
   button: {
     flex: 1,

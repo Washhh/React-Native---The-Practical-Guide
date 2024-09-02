@@ -3,11 +3,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
 import Categories from "./screens/Categories";
 import { MealsOverview } from "./screens/MealsOverview";
+import Meal from "../models/meal";
+import { MealDetails } from "./screens/MealDetails";
 
 export type StackScreens = {
   Categories: undefined;
   MealsOverview: {
     categoryId: string;
+  };
+  MealDetails: {
+    meal: Meal;
   };
 };
 
@@ -32,6 +37,7 @@ export default function App() {
           }}
         />
         <Stack.Screen name="MealsOverview" component={MealsOverview} />
+        <Stack.Screen name="MealDetails" component={MealDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
